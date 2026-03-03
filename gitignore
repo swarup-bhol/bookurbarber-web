@@ -1,0 +1,17 @@
+node_modules
+# Angular
+.angular
+dist/
+
+# Logs
+npm-debug.log
+yarn-error.log
+
+# Mac
+.DS_Store
+
+# Android build
+android/.gradle
+android/build
+android/app/build
+local.properties
