@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://bookurbarber-backend-production.up.railway.app/api',
+  apiUrl: 'https://api.bookurbarber.in/api',
   appName: 'BookurBarber'
 };
