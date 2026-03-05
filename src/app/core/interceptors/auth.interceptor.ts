@@ -6,7 +6,7 @@ import { AuthService } from '../services/auth.service';
 const PUBLIC_URLS = [
   '/auth/otp/', '/auth/login', '/auth/register',
   '/auth/forgot-password', '/auth/reset-password', '/auth/refresh',
-  '/shops/public', '/slots', '/location/meta', '/legal/',
+  '/shops/public', '/location/meta', '/legal/',
 ];
 
 function isPublic(url: string): boolean {
