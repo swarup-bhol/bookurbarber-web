@@ -44,8 +44,8 @@ import { environment } from '../../../environments/environment';
           <div style="margin-top:40px;padding:20px;background:var(--card);border-radius:12px;text-align:center">
             <div style="font-size:13px;color:var(--text2)">Questions? Contact us</div>
             <div style="display:flex;gap:16px;justify-content:center;margin-top:8px;flex-wrap:wrap">
-              <a href="mailto:support@bookurbarber.app" style="color:var(--amber);font-size:13px">support&#64;bookurbarber.app</a>
-              <a href="mailto:legal@bookurbarber.app"   style="color:var(--amber);font-size:13px">legal&#64;bookurbarber.app</a>
+              <a href="mailto:support@bookurbarber.in" style="color:var(--amber);font-size:13px">support&#64;bookurbarber.in</a>
+              <a href="mailto:legal@bookurbarber.in"   style="color:var(--amber);font-size:13px">legal&#64;bookurbarber.in</a>
             </div>
           </div>
         </div>

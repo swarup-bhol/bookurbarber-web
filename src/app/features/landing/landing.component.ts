@@ -49,15 +49,22 @@ import { authModalState } from '../../app.component';
           <button class="btn btn-outline btn-lg" (click)="openAuth('barber')">✂️ Register Your Shop</button>
         </div>
         <div class="hero-stats anim-fade-up-4">
-          @for (stat of stats; track stat.val; let i = $index) {
-            <div style="display:flex;align-items:center;gap:48px">
-              @if (i > 0) { <div class="hero-stat-sep"></div> }
-              <div style="text-align:center">
-                <div class="hero-stat-val">{{ stat.val }}</div>
-                <div class="hero-stat-label">{{ stat.label }}</div>
-              </div>
-            </div>
-          }
+          <div class="stat-item">
+            <div class="hero-stat-val">500+</div>
+            <div class="hero-stat-label">Bookings/mo</div>
+          </div>
+          <div class="stat-item">
+            <div class="hero-stat-val">50+</div>
+            <div class="hero-stat-label">Partner Shops</div>
+          </div>
+          <div class="stat-item">
+            <div class="hero-stat-val">4.8&#9733;</div>
+            <div class="hero-stat-label">Avg Rating</div>
+          </div>
+          <div class="stat-item">
+            <div class="hero-stat-val">Zero</div>
+            <div class="hero-stat-label">Wait Time</div>
+          </div>
         </div>
       </section>
 
@@ -94,6 +101,76 @@ import { authModalState } from '../../app.component';
         </div>
       </section>
 
+      <!-- APP DOWNLOAD SECTION -->
+      <section class="app-dl-section">
+        <div class="app-dl-inner">
+          <div class="app-dl-left">
+            <div class="app-dl-badge">📱 MOBILE APP</div>
+            <h2 class="app-dl-title">Book on the go.<br>Your barber, <span class="app-dl-amber">anywhere.</span></h2>
+            <p class="app-dl-sub">Get the full BookurBarber experience on your phone — instant bookings, live slot updates, WhatsApp confirmations, all in your pocket.</p>
+            <div class="app-dl-btns">
+              <a class="app-dl-btn" href="https://play.google.com/store/apps/details?id=app.bookurbarber" target="_blank" rel="noopener">
+                <div class="app-dl-btn-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M3.18 23.76c.3.16.64.2.98.12l12.49-7.21-2.79-2.8-10.68 9.89zM.54 1.18C.2 1.55 0 2.1 0 2.82v18.36c0 .72.2 1.27.55 1.64l.09.08 10.28-10.28v-.24L.63 1.1l-.09.08zM20.3 10.7l-2.66-1.54-3.14 3.14 3.14 3.14 2.67-1.54c.76-.44.76-1.16-.01-1.6v-.6zM3.18.24L15.67 7.45l-2.79 2.8L2.2.36c.29-.2.68-.23.98-.12z"/>
+                  </svg>
+                </div>
+                <div>
+                  <div class="app-dl-btn-sub">GET IT ON</div>
+                  <div class="app-dl-btn-name">Google Play</div>
+                </div>
+              </a>
+              <a class="app-dl-btn" href="https://apps.apple.com/app/bookurbarber" target="_blank" rel="noopener">
+                <div class="app-dl-btn-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+                  </svg>
+                </div>
+                <div>
+                  <div class="app-dl-btn-sub">DOWNLOAD ON THE</div>
+                  <div class="app-dl-btn-name">App Store</div>
+                </div>
+              </a>
+            </div>
+            <div class="app-dl-note">✨ Free to download · No subscription required</div>
+          </div>
+          <div class="app-dl-right">
+            <div class="app-dl-phone">
+              <div class="app-dl-screen">
+                <div class="app-dl-screen-brand"><span class="app-dl-amber">BOOK</span>UR<span class="app-dl-amber">BARBER</span></div>
+                <div class="app-dl-screen-mock">
+                  <div class="mock-row">
+                    <div class="mock-av">✂️</div>
+                    <div class="mock-info">
+                      <div class="mock-name">Koramangala Cuts</div>
+                      <div class="mock-detail">2 slots left · 09:30 AM</div>
+                    </div>
+                    <div class="mock-price">₹250</div>
+                  </div>
+                  <div class="mock-row">
+                    <div class="mock-av">💈</div>
+                    <div class="mock-info">
+                      <div class="mock-name">Fade Masters</div>
+                      <div class="mock-detail">Open now · 5 slots</div>
+                    </div>
+                    <div class="mock-price">₹350</div>
+                  </div>
+                  <div class="mock-row">
+                    <div class="mock-av">👑</div>
+                    <div class="mock-info">
+                      <div class="mock-name">Royal Grooming</div>
+                      <div class="mock-detail">⭐ 4.9 · Indiranagar</div>
+                    </div>
+                    <div class="mock-price">₹599</div>
+                  </div>
+                  <div class="mock-book-btn">🎯 Book Now</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <app-footer (policyClick)="policyType.set($event)"></app-footer>
     </div>
     }
@@ -103,17 +180,36 @@ import { authModalState } from '../../app.component';
     .brand { font-family:'Unbounded',sans-serif;font-size:18px;font-weight:900;letter-spacing:0px;color:var(--text) }
     .b-amber { color:var(--amber) }
     .nav-btns { display:flex;align-items:center;gap:8px }
-    .landing-hero { position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:80px 24px 60px;text-align:center;overflow:hidden; }
+    .landing-hero { position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:80px 24px 60px;text-align:center; }
     .hero-eyebrow { display:inline-flex;align-items:center;gap:8px;padding:6px 16px;border-radius:30px;border:1px solid rgba(245,166,35,0.25);background:var(--amber-dim);font-size:12px;font-weight:600;color:var(--amber);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:28px; }
     .hero-title { font-family:'Unbounded',sans-serif;font-size:clamp(40px,7vw,88px);font-weight:900;line-height:0.95;letter-spacing:-3px;margin-bottom:24px; }
     .hero-title-line1 { color:var(--text); }
     .hero-title-line2 { color:transparent;background:linear-gradient(135deg,var(--amber),var(--amber2),#ff9500);-webkit-background-clip:text;background-clip:text; }
     .hero-sub { font-size:clamp(15px,2vw,18px);color:var(--text2);max-width:520px;line-height:1.7;margin-bottom:48px; }
     .hero-btns { display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-bottom:64px; }
-    .hero-stats { display:flex;gap:48px;align-items:center;flex-wrap:wrap;justify-content:center; }
-    .hero-stat-val { font-family:'Unbounded',sans-serif;font-size:32px;font-weight:900;color:var(--amber); }
-    .hero-stat-label { font-size:12px;color:var(--text3);margin-top:2px; }
-    .hero-stat-sep { width:1px;height:40px;background:var(--border2); }
+    /* ── Stats strip ── */
+    .hero-stats {
+      display: flex;
+      flex-direction: row;
+      align-items: stretch;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      width: min(580px, calc(100vw - 48px));
+      margin: 0 auto;
+      box-sizing: border-box;
+      overflow: hidden;
+    }
+    .stat-item {
+      flex: 1;
+      text-align: center;
+      padding: 20px 8px;
+      border-right: 1px solid var(--border);
+    }
+    .stat-item:last-child { border-right: none; }
+    .hero-stat-val { font-family:'Unbounded',sans-serif;font-size:clamp(16px,2.5vw,26px);font-weight:900;color:var(--amber); }
+    .hero-stat-label { font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;margin-top:4px; }
+    .hero-stat-sep { display:none; }
     .landing-features { padding:80px 48px;position:relative;z-index:1;border-top:1px solid var(--border); }
     .features-title { font-family:'Unbounded',sans-serif;font-size:clamp(24px,4vw,40px);font-weight:900;text-align:center;margin-bottom:12px; }
     .features-sub { text-align:center;color:var(--text2);margin-bottom:56px; }
@@ -134,7 +230,65 @@ import { authModalState } from '../../app.component';
     .rec-title { font-family:'Unbounded',sans-serif;font-size:15px;font-weight:700;margin-bottom:6px; }
     .rec-desc { font-size:12px;color:var(--text2);line-height:1.6; }
     .rec-cta { margin-top:14px;display:flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:var(--amber); }
-    @media(max-width:760px){ .features-grid,.role-cards-row{grid-template-columns:1fr;} .landing-features,.role-section{padding:48px 18px;} .landing-nav{padding:0 16px;} }
+    /* ── App Download Section ─────────────────────────────── */
+    .app-dl-section { padding:80px 48px;background:var(--bg);border-top:1px solid var(--border);position:relative;z-index:1;overflow:hidden; }
+    .app-dl-section::before { content:'';position:absolute;top:-120px;right:-120px;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(245,166,35,0.07) 0%,transparent 70%);pointer-events:none; }
+    .app-dl-inner { max-width:1000px;margin:0 auto;display:flex;align-items:center;gap:60px; }
+    .app-dl-left { flex:1;min-width:0; }
+    .app-dl-right { flex-shrink:0;display:flex;justify-content:center; }
+    .app-dl-badge { display:inline-flex;align-items:center;gap:8px;padding:5px 14px;border-radius:30px;border:1px solid rgba(245,166,35,0.3);background:var(--amber-dim);font-size:11px;font-weight:700;color:var(--amber);letter-spacing:1.5px;margin-bottom:20px; }
+    .app-dl-title { font-family:'Unbounded',sans-serif;font-size:clamp(24px,3.5vw,40px);font-weight:900;line-height:1.15;margin-bottom:16px; }
+    .app-dl-amber { color:var(--amber); }
+    .app-dl-sub { font-size:15px;color:var(--text2);line-height:1.7;margin-bottom:32px;max-width:440px; }
+    .app-dl-btns { display:flex;gap:14px;flex-wrap:wrap;margin-bottom:20px; }
+    .app-dl-btn { display:flex;align-items:center;gap:12px;padding:12px 22px;background:var(--card);border:1.5px solid var(--border2);border-radius:14px;text-decoration:none;color:var(--text);transition:all .2s;min-width:160px; }
+    .app-dl-btn:hover { border-color:var(--amber);background:var(--amber-dim);transform:translateY(-2px);box-shadow:0 8px 30px rgba(245,166,35,0.15); }
+    .app-dl-btn-icon { width:28px;height:28px;display:flex;align-items:center;justify-content:center;flex-shrink:0; }
+    .app-dl-btn-sub { font-size:9px;color:var(--text3);letter-spacing:1px;text-transform:uppercase; }
+    .app-dl-btn-name { font-family:'Unbounded',sans-serif;font-size:14px;font-weight:700;margin-top:1px; }
+    .app-dl-note { font-size:12px;color:var(--text3); }
+    /* Phone mockup */
+    .app-dl-phone { width:220px;height:420px;background:var(--card);border:2px solid var(--border2);border-radius:36px;padding:16px;box-shadow:0 40px 80px rgba(0,0,0,0.4),0 0 0 1px rgba(255,255,255,0.04);position:relative; }
+    .app-dl-phone::before { content:'';position:absolute;top:10px;left:50%;transform:translateX(-50%);width:60px;height:4px;background:var(--border2);border-radius:2px; }
+    .app-dl-screen { height:100%;display:flex;flex-direction:column;padding-top:16px; }
+    .app-dl-screen-brand { font-family:'Unbounded',sans-serif;font-size:10px;font-weight:900;text-align:center;margin-bottom:14px;letter-spacing:.5px; }
+    .app-dl-screen-mock { display:flex;flex-direction:column;gap:10px; }
+    .mock-row { display:flex;align-items:center;gap:8px;background:var(--surface);border-radius:10px;padding:8px 10px; }
+    .mock-av { font-size:18px;flex-shrink:0; }
+    .mock-info { flex:1;min-width:0; }
+    .mock-name { font-size:10px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis; }
+    .mock-detail { font-size:9px;color:var(--text3);margin-top:1px; }
+    .mock-price { font-size:11px;font-weight:800;color:var(--amber);flex-shrink:0; }
+    .mock-book-btn { margin-top:6px;background:var(--amber);color:#000;font-weight:800;font-size:11px;text-align:center;padding:10px;border-radius:10px; }
+
+        @media(max-width:760px){
+      .features-grid,.role-cards-row { grid-template-columns:1fr; }
+      .landing-features,.role-section,.app-dl-section { padding:48px 18px; }
+      .landing-nav { padding:0 16px; }
+      .app-dl-inner { flex-direction:column;gap:40px; }
+      .app-dl-right { width:100%; }
+      .app-dl-phone { width:100%;max-width:300px;height:380px; }
+      /* Download buttons — full width stacked on mobile */
+      .app-dl-btns { flex-direction:column; }
+      .app-dl-btn { width:100%;box-sizing:border-box; }
+    }
+    @media(max-width:560px){
+      .hero-stats {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        width: calc(100% - 32px);
+        border-radius: 14px;
+      }
+      /* Restore borders for grid layout */
+      .stat-item { border-right: none; border-bottom: 1px solid var(--border); }
+      .stat-item:nth-child(1),
+      .stat-item:nth-child(2) { border-bottom: 1px solid var(--border); }
+      .stat-item:nth-child(3),
+      .stat-item:nth-child(4) { border-bottom: none; }
+      .stat-item:nth-child(odd) { border-right: 1px solid var(--border); }
+      .hero-stat-val { font-size: 22px; }
+      .hero-stat-label { font-size: 9px; }
+    }
   `]
 })
 export class LandingComponent {

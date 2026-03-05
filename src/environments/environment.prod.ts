@@ -1,6 +1,5 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://api.bookurbarber.app/api',
-  appName: 'BookurBarber',
-  appUrl: 'https://bookurbarber.app'
+  apiUrl: 'https://api.bookurbarber.in/api',
+  appName: 'BookurBarber'
 };

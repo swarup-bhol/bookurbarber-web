@@ -560,7 +560,7 @@ type Tab = 'dashboard' | 'bookings' | 'services' | 'slots' | 'employees' | 'shop
             <div style="background:var(--card2);border-radius:12px;padding:14px;margin-bottom:16px">
               <div style="font-size:11px;color:var(--text3);margin-bottom:6px">Direct Booking Link</div>
               <div style="font-size:13px;color:var(--amber);font-weight:600;word-break:break-all">
-                bookurbarber.app/{{ shop()!.slug }}
+                bookurbarber.in/{{ shop()!.slug }}
               </div>
             </div>
             <button class="btn btn-amber" (click)="copyLink()">📋 Copy Link</button>
@@ -820,7 +820,7 @@ export class BarberComponent implements OnInit {
   isWorkDay(d: string) { return (this.shopForm.workDays || '').includes(d); }
   toggleDay(d: string) { const days = (this.shopForm.workDays || '').split(',').filter(Boolean); const idx = days.indexOf(d); if (idx >= 0) days.splice(idx,1); else days.push(d); this.shopForm.workDays = days.join(','); }
 
-  copyLink() { navigator.clipboard?.writeText(`https://bookurbarber.app/${this.shop()?.slug}`).then(() => this.toast.ok('Link copied!')); }
+  copyLink() { navigator.clipboard?.writeText(`https://bookurbarber.in/${this.shop()?.slug}`).then(() => this.toast.ok('Link copied!')); }
 
   loadEarningsReport() {
     // Reuse the employee report endpoint, filtering by month server-side (or use the same daily report for now)

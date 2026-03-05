@@ -24,8 +24,8 @@ import { CommonModule } from '@angular/common';
         </div>
         <div style="display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;align-items:center">
           <div style="display:flex;gap:16px;flex-wrap:wrap">
-            <a href="mailto:support@bookurbarber.app" style="font-size:11px;color:var(--text3);text-decoration:none">📧 support&#64;bookurbarber.app</a>
-            <a href="mailto:legal@bookurbarber.app"   style="font-size:11px;color:var(--text3);text-decoration:none">⚖️ legal&#64;bookurbarber.app</a>
+            <a href="mailto:support@bookurbarber.in" style="font-size:11px;color:var(--text3);text-decoration:none">📧 support&#64;bookurbarber.in</a>
+            <a href="mailto:legal@bookurbarber.in"   style="font-size:11px;color:var(--text3);text-decoration:none">⚖️ legal&#64;bookurbarber.in</a>
             <span style="font-size:11px;color:var(--text3)">📍 Bangalore, Karnataka, India</span>
           </div>
           <div style="font-size:10px;color:var(--border2)">© {{ year }} BookurBarber Technologies Pvt. Ltd. · All rights reserved</div>
