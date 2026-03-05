@@ -142,7 +142,7 @@ type Tab = 'dashboard' | 'bookings' | 'services' | 'slots' | 'employees' | 'shop
             <button class="area-pill" [class.on]="bkFilter() === f.val" (click)="bkFilter.set(f.val)">{{ f.label }}</button>
           }
         </div>
-        @for (b of filteredBookings(); track b.id) {
+        @for (b of pagedBookings; track b.id) {
           <div class="bk">
             <div class="bk-av">{{ b.customerName[0] }}</div>
             <div class="bk-body">
@@ -167,6 +167,13 @@ type Tab = 'dashboard' | 'bookings' | 'services' | 'slots' | 'employees' | 'shop
                 }
               </div>
             </div>
+          </div>
+        }
+        @if (hasMoreBookings) {
+          <div class="load-more-row">
+            <button class="btn btn-outline btn-sm" (click)="loadMoreBookings()">
+              Load more · {{ filteredBookings().length - pagedBookings.length }} remaining
+            </button>
           </div>
         }
         @if (filteredBookings().length === 0) {
@@ -202,7 +209,7 @@ type Tab = 'dashboard' | 'bookings' | 'services' | 'slots' | 'employees' | 'shop
             <button class="btn btn-amber btn-sm" (click)="openServiceModal()">+ Add Service</button>
           </div>
         </div>
-        @for (svc of shop()?.services || []; track svc.id) {
+        @for (svc of pagedServices; track svc.id) {
           <div class="svc" [class.disabled]="!svc.enabled">
             <div class="svc-ico">{{ svc.icon || '✂️' }}</div>
             <div class="svc-info"><div class="svc-name">{{ svc.serviceName }}</div><div class="svc-meta">{{ svc.category }} · {{ svc.durationMinutes }}min</div></div>
@@ -240,7 +247,7 @@ type Tab = 'dashboard' | 'bookings' | 'services' | 'slots' | 'employees' | 'shop
             </div>
             <div class="mfoot">
               <button class="btn btn-outline btn-sm" (click)="svcModal.set(false)">Cancel</button>
-              <button class="btn btn-amber btn-sm" [disabled]="!svcForm.serviceName || !svcForm.price" (click)="saveService()">{{ editSvc() ? 'Update' : 'Add' }} Service</button>
+              <button class="btn btn-amber btn-sm" [disabled]="!svcForm.serviceName || !svcForm.price || savingService()" (click)="saveService()">{{ savingService() ? 'Saving…' : (editSvc() ? 'Update' : 'Add') + ' Service' }}</button>
             </div>
           </div>
         </div>
@@ -370,7 +377,7 @@ type Tab = 'dashboard' | 'bookings' | 'services' | 'slots' | 'employees' | 'shop
               }
             </div>
           </div>
-          <button class="btn btn-amber" (click)="saveSchedule()">Save Schedule</button>
+          <button class="btn btn-amber" [disabled]="savingSchedule()" (click)="saveSchedule()" style="min-width:148px">{{ savingSchedule() ? 'Saving…' : 'Save Schedule' }}</button>
         </div>
 
         <!-- Slot preview + block -->
@@ -436,7 +443,7 @@ type Tab = 'dashboard' | 'bookings' | 'services' | 'slots' | 'employees' | 'shop
             <div class="fg"><label class="fl">City</label><input class="fi" [(ngModel)]="shopForm.city"></div>
             <div class="fg"><label class="fl">Area</label><input class="fi" [(ngModel)]="shopForm.area"></div>
           </div>
-          <button class="btn btn-amber" (click)="saveShop()">Save Changes</button>
+          <button class="btn btn-amber" [disabled]="savingShop()" (click)="saveShop()" style="min-width:148px">{{ savingShop() ? 'Saving…' : 'Save Changes' }}</button>
         </div>
         @if (shop()) {
           <div class="card" style="margin-top:14px">
@@ -592,6 +599,16 @@ export class BarberComponent implements OnInit {
   editEmp        = signal<EmployeeResponse | null>(null);
   policyType     = signal<string | null>(null);
   rsDate = ''; rsTime = ''; rsReason = '';
+
+  // ── Save loading states ──────────────────────────────
+  savingShop     = signal(false);
+  savingSchedule = signal(false);
+  savingService  = signal(false);
+  savingEmployee = signal(false);
+
+  // ── Pagination ───────────────────────────────────────
+  bkPage      = signal(1);  bkPageSize  = 10;
+  svcPage     = signal(1);  svcPageSize = 8;
 
   svcForm: ServiceRequest = { serviceName: '', category: 'HAIR', price: 0, durationMinutes: 30 };
   empForm: EmployeeRequest = { name: '', avatar: '💈', role: '' };
@@ -764,14 +781,40 @@ export class BarberComponent implements OnInit {
   saveService() {
     const svc = this.editSvc();
     const obs = svc ? this.shopSvc.updateService(svc.id, this.svcForm) : this.shopSvc.addService(this.svcForm);
-    obs.subscribe({ next: () => { this.svcModal.set(false); this.toast.ok(svc ? 'Service updated' : 'Service added ✓'); this.loadShop(); } });
+    this.savingService.set(true);
+    obs.subscribe({
+      next: () => { this.svcModal.set(false); this.toast.ok(svc ? 'Service updated' : 'Service added ✓'); this.loadShop(); this.savingService.set(false); },
+      error: e => { this.toast.err(e.error?.message || 'Failed'); this.savingService.set(false); }
+    });
   }
   toggleSvc(svc: ServiceResponse) { this.shopSvc.toggleService(svc.id).subscribe({ next: () => { this.loadShop(); this.toast.ok(svc.enabled ? 'Service disabled' : 'Service enabled'); } }); }
 
-  saveShop() { this.shopSvc.updateMyShop(this.shopForm).subscribe({ next: r => { this.shop.set(r.data); this.toast.ok('Shop updated ✓'); } }); }
+  // ── Pagination getters ─────────────────────────────────────────────
+  get pagedBookings() { return this.filteredBookings().slice(0, this.bkPage() * this.bkPageSize); }
+  get hasMoreBookings() { return this.filteredBookings().length > this.bkPage() * this.bkPageSize; }
+  loadMoreBookings() { this.bkPage.update(p => p + 1); }
+
+  get pagedServices() { return (this.shop()?.services || []).slice(0, this.svcPage() * this.svcPageSize); }
+  get hasMoreServices() { return (this.shop()?.services?.length || 0) > this.svcPage() * this.svcPageSize; }
+  loadMoreServices() { this.svcPage.update(p => p + 1); }
+
+  setTab(t: Tab) { this.tab.set(t); this.bkPage.set(1); this.svcPage.set(1); }
+
+  // ── Save with loaders ────────────────────────────────────────────────
+  saveShop() {
+    this.savingShop.set(true);
+    this.shopSvc.updateMyShop(this.shopForm).subscribe({
+      next: r => { this.shop.set(r.data); this.toast.ok('Shop updated ✓'); this.savingShop.set(false); },
+      error: e => { this.toast.err(e.error?.message || 'Failed to save'); this.savingShop.set(false); }
+    });
+  }
   saveSchedule() {
+    this.savingSchedule.set(true);
     this.shopSvc.updateMyShop({ openTime: this.shopForm.openTime, closeTime: this.shopForm.closeTime, slotDurationMinutes: this.shopForm.slotDurationMinutes, seats: this.shopForm.seats, workDays: this.shopForm.workDays })
-      .subscribe({ next: r => { this.shop.set(r.data); this.toast.ok('Schedule saved ✓'); } });
+      .subscribe({
+        next: r => { this.shop.set(r.data); this.toast.ok('Schedule saved ✓'); this.savingSchedule.set(false); },
+        error: e => { this.toast.err(e.error?.message || 'Failed'); this.savingSchedule.set(false); }
+      });
   }
 
   isWorkDay(d: string) { return (this.shopForm.workDays || '').includes(d); }

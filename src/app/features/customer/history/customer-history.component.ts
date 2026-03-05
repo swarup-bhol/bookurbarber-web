@@ -68,7 +68,7 @@ import { BookingResponse } from '../../../core/models/models';
         @if (past().length > 0) {
           <div class="card">
             <div class="ch"><div class="ct">Past Bookings</div></div>
-            @for (b of past(); track b.id) {
+            @for (b of pagedPast; track b.id) {
               <div class="pb-card">
                 <div class="pb-ico">{{ b.shopEmoji || '✂️' }}</div>
                 <div style="flex:1;min-width:0">
@@ -108,12 +108,18 @@ export class CustomerHistoryComponent {
   bookSvc = inject(BookingService);
   toast = inject(ToastService);
 
+  pastPage    = signal(1);
+  pastPageSize = 8;
+
   upcoming() {
     return this.bookings.filter(b => ['PENDING','CONFIRMED'].includes(b.status));
   }
   past() {
     return this.bookings.filter(b => ['COMPLETED','CANCELLED','REJECTED'].includes(b.status));
   }
+  get pagedPast()     { return this.past().slice(0, this.pastPage() * this.pastPageSize); }
+  get hasMorePast()   { return this.past().length > this.pastPage() * this.pastPageSize; }
+  loadMorePast()      { this.pastPage.update(p => p + 1); }
 
   cancel(id: number) {
     this.bookSvc.cancelMyBooking(id).subscribe({

@@ -8,7 +8,7 @@ import { AuthService } from '../../../core/services/auth.service';
   imports: [CommonModule],
   template: `
     <div class="topbar">
-      <div class="topbar-brand">BOOKUR<span>BARBER</span></div>
+      <div class="topbar-brand"><span class="b-amber">BOOK</span>UR<span class="b-amber">BARBER</span></div>
 
       <div class="topbar-right">
         @if (notifCount > 0) {
@@ -74,7 +74,7 @@ import { AuthService } from '../../../core/services/auth.service';
       font-weight: 900;
       flex-shrink: 0;
     }
-    .topbar-brand span { color: var(--amber); }
+    .b-amber { color: var(--amber); }
 
     .topbar-right {
       display: flex;

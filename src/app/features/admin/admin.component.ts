@@ -117,7 +117,7 @@ type Tab = 'overview' | 'shops' | 'bookings' | 'revenue';
 
         <!-- Shop cards grid -->
         <div style="display:flex;flex-direction:column;gap:10px">
-          @for (s of filteredShops(); track s.id) {
+          @for (s of pagedShops; track s.id) {
             <div class="admin-card">
               <div class="admin-card-left">
                 <div class="admin-shop-emoji">{{ s.emoji || '✂️' }}</div>
@@ -156,6 +156,13 @@ type Tab = 'overview' | 'shops' | 'bookings' | 'revenue';
           }
         </div>
 
+        @if (hasMoreShops) {
+          <div style="text-align:center;padding:16px 0 4px">
+            <button class="btn btn-outline btn-sm" (click)="loadMoreShops()">
+              Load more · {{ filteredShops().length - pagedShops.length }} more shops
+            </button>
+          </div>
+        }
         @if (filteredShops().length === 0) {
           <div class="empty"><div class="ei">🏪</div><div class="et">No shops found</div></div>
         }
@@ -200,7 +207,7 @@ type Tab = 'overview' | 'shops' | 'bookings' | 'revenue';
         </div>
 
         <div style="display:flex;flex-direction:column;gap:8px">
-          @for (b of filteredBookings(); track b.id) {
+          @for (b of pagedBookings; track b.id) {
             <div class="admin-bk-card">
               <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;flex-wrap:wrap">
                 <div style="font-weight:700;font-size:14px">{{ b.customerName }}</div>
@@ -325,6 +332,10 @@ export class AdminComponent implements OnInit {
   shopFilter     = signal('');
   bkFilter       = signal('');
   commissionShop = signal<ShopResponse | null>(null);
+
+  // ── Pagination ───────────────────────────────────────
+  bkPage       = signal(1);  bkPageSize   = 10;
+  shopPage     = signal(1);  shopPageSize = 10;
   newCommission  = 10;
 
   nav = [
@@ -355,6 +366,16 @@ export class AdminComponent implements OnInit {
 
   pendingShops()        { return this.shops().filter(s => s.status === 'PENDING').length; }
   pendingShopsPreview() { return this.shops().filter(s => s.status === 'PENDING').slice(0,3); }
+  // ── Pagination getters ─────────────────────────────────────────────
+  get pagedBookings()  { return this.filteredBookings().slice(0, this.bkPage() * this.bkPageSize); }
+  get hasMoreBookings(){ return this.filteredBookings().length > this.bkPage() * this.bkPageSize; }
+  loadMoreBookings()   { this.bkPage.update(p => p + 1); }
+
+  get pagedShops()     { return this.filteredShops_().slice(0, this.shopPage() * this.shopPageSize); }
+  get hasMoreShops()   { return this.filteredShops_().length > this.shopPage() * this.shopPageSize; }
+  loadMoreShops()      { this.shopPage.update(p => p + 1); }
+
+  filteredShops_()      { return this.shopFilter() ? this.shops().filter(s => s.status === this.shopFilter()) : this.shops(); }
   filteredShops()       { return this.shopFilter() ? this.shops().filter(s => s.status === this.shopFilter()) : this.shops(); }
   filteredBookings()    { return this.bkFilter()   ? this.bookings().filter(b => b.status === this.bkFilter()) : this.bookings(); }
   shopsWithRevenue()    { return [...this.shops()].filter(s => (s.monthlyRevenue||0) > 0).sort((a,b) => (b.monthlyRevenue||0)-(a.monthlyRevenue||0)); }

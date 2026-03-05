@@ -17,7 +17,7 @@ type Step = 'phone' | 'otp' | 'name' | 'login' | 'register' | 'forgot';
       <div class="auth-box" (click)="$event.stopPropagation()">
 
         <div class="auth-box-head">
-          <div class="auth-box-logo">BOOKUR<span style="color:var(--amber)">BARBER</span></div>
+          <div class="auth-box-logo"><span style="color:var(--amber)">BOOK</span>UR<span style="color:var(--amber)">BARBER</span></div>
           <div class="auth-box-title">{{ titles[step()] }}</div>
           <div class="auth-box-sub">{{ subs[step()] }}</div>
 

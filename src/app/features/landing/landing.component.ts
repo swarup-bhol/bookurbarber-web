@@ -23,7 +23,7 @@ import { authModalState } from '../../app.component';
 
       <!-- NAV -->
       <nav class="landing-nav">
-        <div class="brand">BOOKUR<span>BARBER</span></div>
+        <div class="brand"><span class="b-amber">BOOK</span>UR<span class="b-amber">BARBER</span></div>
         <div class="nav-btns">
           <button class="btn btn-ghost btn-sm" (click)="openAuth('barber')">For Barbers</button>
           <button class="btn btn-amber btn-sm" (click)="openAuth('customer')">Book Now</button>
@@ -101,7 +101,7 @@ import { authModalState } from '../../app.component';
   styles: [`
     .landing-nav { position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 32px;height:60px;background:rgba(6,6,10,0.95);border-bottom:1px solid var(--border); }
     .brand { font-family:'Unbounded',sans-serif;font-size:18px;font-weight:900;letter-spacing:0px;color:var(--text) }
-    .brand span { color:var(--amber) }
+    .b-amber { color:var(--amber) }
     .nav-btns { display:flex;align-items:center;gap:8px }
     .landing-hero { position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:80px 24px 60px;text-align:center;overflow:hidden; }
     .hero-eyebrow { display:inline-flex;align-items:center;gap:8px;padding:6px 16px;border-radius:30px;border:1px solid rgba(245,166,35,0.25);background:var(--amber-dim);font-size:12px;font-weight:600;color:var(--amber);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:28px; }

@@ -1,4 +1,5 @@
 import { Component, Input, Output, EventEmitter, inject, signal, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
@@ -10,7 +11,7 @@ import { environment } from '../../../environments/environment';
   template: `
     <div style="min-height:100vh;background:var(--bg);display:flex;flex-direction:column">
       <nav style="display:flex;align-items:center;gap:16px;padding:16px 24px;border-bottom:1px solid var(--border);background:var(--surface);position:sticky;top:0;z-index:100">
-        <button class="btn btn-ghost btn-sm" (click)="back.emit()">← Back</button>
+        <button class="btn btn-ghost btn-sm" (click)="goBack()">← Back</button>
         <div style="font-family:'Unbounded',sans-serif;font-size:14px;font-weight:700">
           {{ policy()?.title || '...' }}
         </div>
@@ -55,16 +56,33 @@ import { environment } from '../../../environments/environment';
   `
 })
 export class PolicyPageComponent implements OnInit {
+  // Dual mode:
+  // Routed  → /terms  /privacy  /refund  (type from URL snapshot, back = history.back)
+  // Inline  → [type]="'terms'"  (back)="..."  used inside dashboards
   @Input() type!: string;
   @Output() back = new EventEmitter<void>();
 
-  private http = inject(HttpClient);
-  policy = signal<any>(null);
+  private http  = inject(HttpClient);
+  private route = inject(ActivatedRoute);
+  policy        = signal<any>(null);
 
   ngOnInit() {
+    // If type wasn't passed via @Input, derive from the route path (e.g. /terms → 'terms')
+    if (!this.type) {
+      const seg = this.route.snapshot.url[0]?.path || '';
+      this.type = ['terms','privacy','refund'].includes(seg) ? seg : 'terms';
+    }
     this.http.get<any>(`${environment.apiUrl}/legal/${this.type}`).subscribe({
-      next: res => this.policy.set(res.data),
-      error: () => this.policy.set({ title: 'Policy', lastUpdated: 'N/A', sections: [{ heading: 'Unavailable', body: 'Please try again later.' }] })
+      next:  res => this.policy.set(res.data),
+      error: ()  => this.policy.set({
+        title: 'Policy', lastUpdated: 'N/A',
+        sections: [{ heading: 'Unavailable', body: 'Please try again later.' }]
+      })
     });
+  }
+
+  goBack() {
+    // inline mode → emit to parent; routed mode → browser back
+    this.back.observed ? this.back.emit() : window.history.back();
   }
 }
