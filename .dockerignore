@@ -1,0 +1,15 @@
+node_modules
+dist
+.git
+.gitignore
+Dockerfile
+README.md
+
+# Zip files
+*.zip
+
+# OS files
+.DS_Store
+
+# Angular cache
+.angular
